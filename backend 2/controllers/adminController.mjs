@@ -1,12 +1,11 @@
-import AdminController from '../controllers/AdminController.mjs';
 import Service from '../model/service.mjs';
 import Master from '../model/master.mjs';
 import Client from '../model/client.mjs';
+import Order from '../model/order.mjs'; // Добавлен импорт Order
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { configDotenv } from 'dotenv';
 import { body, validationResult } from 'express-validator';
-import Client from '../model/client.mjs';
 
 configDotenv();
 
@@ -266,9 +265,15 @@ export default class AdminController {
                 return res.status(400).json({ msg: 'Фамилия не указана' });
             }
 
-            // Поиск клиентов по фамилии
-            const clients = await Client.find({ surname: { $regex: new RegExp(surname, 'i') } });
-              
+            // Преобразуем page и limit в числа
+            const pageNumber = parseInt(page, 10);
+            const limitNumber = parseInt(limit, 10);
+
+            // Поиск клиентов по фамилии с пагинацией
+            const clients = await Client.find({ surname: { $regex: new RegExp(surname, 'i') } })
+                .limit(limitNumber) // Ограничиваем количество результатов
+                .skip((pageNumber - 1) * limitNumber); // Пропускаем результаты для пагинации
+
             if (clients.length === 0) {
                 return res.status(404).json({ msg: 'Клиенты с такой фамилией не найдены' });
             }

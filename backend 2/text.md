@@ -1,3 +1,29 @@
+    оздание отзыва:
+
+        Метод: POST /reviews/create
+
+        Тело запроса:
+        json
+        Copy
+
+        {
+          "clientId": "клиент_id",
+          "masterId": "мастер_id",
+          "rating": 5,
+          "comment": "Отличный мастер!"
+        }
+
+    Получение отзывов для мастера:
+
+        Метод: GET /reviews/master/:masterId
+
+    Удаление отзыва:
+
+        Метод: DELETE /reviews/:reviewId
+
+
+
+
 1. Клиент
 Регистрация клиента
 
