@@ -13,7 +13,7 @@ const ChangePassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (newPassword !== confirmNewPassword) {
-      setError('Новый пароль и подтверждение не совпадают');
+      setError('Новый пароль и подтверждениеfdfsdfd не совпадают');
       return;
     }
 
